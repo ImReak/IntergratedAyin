@@ -4,8 +4,7 @@ import re
 import nonebot
 from nonebot.adapters.onebot.v11 import Message, MessageSegment,Bot,MessageEvent
 from nonebot import require
-from nonebot.plugin.on import on_startswith
-from nonebot.rule import to_me
+from nonebot.plugin.on import on_keyword
 
 from nonebot_plugin_apscheduler import scheduler
 require("nonebot_plugin_apscheduler")
@@ -21,31 +20,31 @@ async def send_message_catlitterbox():
     bot = nonebot.get_bot()
     await bot.send_group_msg(group_id=group_id_tr, message="购买猫砂盆")
     await asyncio.sleep(2)
-    await bot.send_group_msg(group_id=group_id_tr, message="使用猫砂盆")
+    await bot.send_group_msg(group_id=group_id_tr, message="赠送猫砂盆")
     await asyncio.sleep(2)
 async def send_message_stockfish():
     bot = nonebot.get_bot()
     await bot.send_group_msg(group_id=group_id_tr, message="购买小鱼干")
     await asyncio.sleep(2)
-    await bot.send_group_msg(group_id=group_id_tr, message="使用小鱼干")
+    await bot.send_group_msg(group_id=group_id_tr, message="赠送小鱼干")
     await asyncio.sleep(2)
 async def send_message_scratchers():
     bot = nonebot.get_bot()
     await bot.send_group_msg(group_id=group_id_tr, message="购买猫抓板")
     await asyncio.sleep(2)
-    await bot.send_group_msg(group_id=group_id_tr, message="使用猫抓板")
+    await bot.send_group_msg(group_id=group_id_tr, message="赠送猫抓板")
     await asyncio.sleep(2)
 async def send_message_catstick():
     bot = nonebot.get_bot()
     await bot.send_group_msg(group_id=group_id_tr, message="购买逗猫棒")
     await asyncio.sleep(2)
-    await bot.send_group_msg(group_id=group_id_tr, message="使用逗猫棒")
+    await bot.send_group_msg(group_id=group_id_tr, message="赠送逗猫棒")
     await asyncio.sleep(2)
 async def send_message_appointment():
     bot = nonebot.get_bot()
     await bot.send_group_msg(group_id=group_id_tr, message="购买约会券")
     await asyncio.sleep(2)
-    await bot.send_group_msg(group_id=group_id_tr, message="使用约会券")
+    await bot.send_group_msg(group_id=group_id_tr, message="赠送约会券")
     await asyncio.sleep(2)
 
 
@@ -75,11 +74,11 @@ async def auto_work_main_function():
     await bot.send_group_msg(group_id=group_id_tr, message=money_ask_msg)
 
 #购买并赠送发信模块
-get_money_value = on_startswith("您现在有",rule=to_me())
+get_money_value = on_keyword("@小夏 您现在有")
 @get_money_value.handle()
 async def get_money_main_function(bot: Bot,event: MessageEvent):
     global money
-    if str(event.user_id) == "2517519695":
+    if str(event.user_id) == "1701173738":
         text_ache = event.get_message().extract_plain_text()
         match = re.search(r'\d+', text_ache)
         if match:
