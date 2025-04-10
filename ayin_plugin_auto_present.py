@@ -44,7 +44,7 @@ async def send_message_appointment():
     bot = nonebot.get_bot()
     await bot.send_group_msg(group_id=group_id_tr, message="购买约会券")
     await asyncio.sleep(2)
-    await bot.send_group_msg(group_id=group_id_tr, message="赠送约会券")
+    await bot.send_group_msg(group_id=group_id_tr, message="使用约会券")
     await asyncio.sleep(2)
 
 
@@ -74,10 +74,10 @@ async def auto_work_main_function():
     await bot.send_group_msg(group_id=group_id_tr, message=money_ask_msg)
 
 #购买并赠送发信模块
-get_money_value = on_keyword("您现在有")
+get_money_value = on_keyword("现在有")
 @get_money_value.handle()
 async def get_money_main_function(bot: Bot,event: MessageEvent):
-    global money, quantities
+    global money
     if str(event.user_id) == "2517519695":
         text_ache = event.get_message().extract_plain_text()
         if "小夏" in text_ache:
@@ -89,13 +89,20 @@ async def get_money_main_function(bot: Bot,event: MessageEvent):
             favor_counter_function(money)
             quantities = favor_counter_function(money)
 
-        for _ in range(quantities['猫砂盆']):
-            await send_message_catlitterbox()
-        for _ in range(quantities['小鱼干']):
-            await send_message_stockfish()
-        for _ in range(quantities['猫抓板']):
-            await send_message_scratchers()
-        for _ in range(quantities['逗猫棒']):
-            await send_message_catstick()
-        for _ in range(quantities['约会券']):
-            await send_message_appointment()
+            for _ in range(quantities['猫砂盆']):
+                await send_message_catlitterbox()
+            for _ in range(quantities['小鱼干']):
+                await send_message_stockfish()
+            for _ in range(quantities['猫抓板']):
+                await send_message_scratchers()
+            for _ in range(quantities['逗猫棒']):
+                await send_message_catstick()
+            for _ in range(quantities['约会券']):
+                await send_message_appointment()
+
+        else:
+            pass
+    else:
+        pass
+
+
