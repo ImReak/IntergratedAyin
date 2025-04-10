@@ -4,7 +4,7 @@ import re
 import nonebot
 from nonebot.adapters.onebot.v11 import Message, MessageSegment,Bot,MessageEvent
 from nonebot import require
-from nonebot.plugin.on import on_keyword
+from nonebot.plugin.on import on_keyword, on_startswith
 
 from nonebot_plugin_apscheduler import scheduler
 require("nonebot_plugin_apscheduler")
@@ -74,19 +74,20 @@ async def auto_work_main_function():
     await bot.send_group_msg(group_id=group_id_tr, message=money_ask_msg)
 
 #购买并赠送发信模块
-get_money_value = on_keyword("@小夏 您现在有")
+get_money_value = on_keyword("您现在有")
 @get_money_value.handle()
 async def get_money_main_function(bot: Bot,event: MessageEvent):
-    global money
-    if str(event.user_id) == "1701173738":
+    global money, quantities
+    if str(event.user_id) == "2517519695":
         text_ache = event.get_message().extract_plain_text()
-        match = re.search(r'\d+', text_ache)
-        if match:
-            money = match.group()
-        else:
-            money = None
-        favor_counter_function(money)
-        quantities = favor_counter_function(money)
+        if "小夏" in text_ache:
+            match = re.search(r'\d+', text_ache)
+            if match:
+                money = match.group()
+            else:
+                money = None
+            favor_counter_function(money)
+            quantities = favor_counter_function(money)
 
         for _ in range(quantities['猫砂盆']):
             await send_message_catlitterbox()
